@@ -1,11 +1,16 @@
 
-import { defineConfig } from "tailwindcss";
+import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import tailwindAnimate from "tailwindcss-animate";
 
-export default defineConfig({
+const config: Config = {
   darkMode: ["class"],
-  content: ["./src/**/*.{ts,tsx}"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -15,6 +20,9 @@ export default defineConfig({
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", ...(fontFamily.sans || [])],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -52,24 +60,16 @@ export default defineConfig({
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
-        },
-        apple: {
-          blue: "#0FA0CE", // Accent blue color
+          primary: "hsl(var(--sidebar-primary))",
+          accent: "hsl(var(--sidebar-accent))",
         },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-      },
-      fontFamily: {
-        sans: ["SF Pro Display", "Inter", ...fontFamily.sans],
       },
       keyframes: {
         "accordion-down": {
@@ -87,5 +87,7 @@ export default defineConfig({
       },
     },
   },
-  plugins: [tailwindAnimate],
-});
+  plugins: [require("tailwindcss-animate")],
+};
+
+export default config;
